@@ -1,6 +1,7 @@
 import { Box, Button, Slider, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import styles from "./index.module.scss";
+import { useSelector } from "react-redux";
 
 //
 const getBeautifulTimeValue = (value) => {
@@ -10,10 +11,11 @@ const getBeautifulTimeValue = (value) => {
 };
 
 // --------------------------------------------------------
-const TimerBody = ({ prop1 }) => {
-  const [timerValue, setTimerValue] = useState(300);
+const TimerBody = () => {
+  const [timerValue, setTimerValue] = useState(3);
   const [currentTimerId, setCurrentTimerId] = useState(null);
   //
+  const audioRef = useSelector((state) => state.settings.audioRef);
   const [minutesValue, setMinutesValue] = useState(0);
   const [secondsValue, setSecondsValue] = useState(0);
   const onHandleChangeMinutesValue = (e) => {
@@ -32,13 +34,33 @@ const TimerBody = ({ prop1 }) => {
   const onSetInputsValues = () =>
     setTimerValue(minutesValue * 60 + +secondsValue);
   //
-  const onTimerStart = () => {
-    const timerId = setInterval(() => setTimerValue((prev) => prev - 1), 1000);
-    setCurrentTimerId(timerId);
-  };
   const onTimerStop = () => {
+    // audioRef.current.pause();
     clearInterval(currentTimerId);
     setCurrentTimerId(null);
+  };
+
+  const playMusicFunc = () => {
+    audioRef.current.play();
+    setTimeout(() => {
+      audioRef.current.pause();
+    }, 3000);
+  };
+  const onTimerStart = () => {
+    // audioRef.current.play();
+    const timerId = setInterval(() => {
+      setTimerValue((prev) => {
+        if (prev === 0) {
+          // playMusic
+          playMusicFunc();
+          // onTimerStop();
+          clearInterval(currentTimerId);
+          setCurrentTimerId(null);
+          return 0;
+        } else return prev - 1;
+      });
+    }, 1000);
+    setCurrentTimerId(timerId);
   };
   //
   const isInputValuesEqualCurrentTime =
@@ -49,6 +71,7 @@ const TimerBody = ({ prop1 }) => {
       setSecondsValue(seconds);
     }
   }, [timerValue]);
+  //
   return (
     <Box maxHeight={300}>
       <Typography variant="h1">
