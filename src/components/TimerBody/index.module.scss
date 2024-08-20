@@ -34,9 +34,18 @@
   height: 200px;
   border-radius: 50%;
   background-size: contain;
-  animation: showItem 1s linear forwards;
+  // animation: showItem 1s linear forwards;
   // animation: rotateItem 10s linear infinite;
   // animation: hideItem 1s linear forwards;
+}
+.entering {
+  animation: showItem 1s linear forwards;
+}
+.entered {
+  animation: rotateItem 10s linear infinite;
+}
+.exiting {
+  animation: hideItem 1s linear forwards;
 }
 
 @keyframes showItem {
@@ -49,10 +58,10 @@
 }
 @keyframes rotateItem {
   from {
-    transform: rotate(0deg);
+    transform: translateY(400px) rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: translateY(400px) rotate(360deg);
   }
 }
 @keyframes hideItem {

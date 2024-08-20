@@ -4,6 +4,7 @@ import styles from "./index.module.scss";
 import { useSelector } from "react-redux";
 import TimerInputs from "./TimerInputs";
 import gifLoader from "../../assets/gif_loader.gif";
+import { Transition } from "react-transition-group";
 
 //
 const getBeautifulTimeValue = (value) => [Math.floor(value / 60), value % 60];
@@ -42,10 +43,19 @@ const TimerBody = () => {
 
   return (
     <Box className={styles.mainTimerBox}>
-      <div
-        className={styles.gifLoader}
-        style={{ backgroundImage: `url(${gifLoader})` }}
-      />
+      <Transition
+        in={!!currentTimerId}
+        timeout={1000}
+        mountOnEnter
+        unmountOnExit
+      >
+        {(state) => (
+          <div
+            className={`${styles.gifLoader} ${styles[state]}`}
+            style={{ backgroundImage: `url(${gifLoader})` }}
+          />
+        )}
+      </Transition>
       <Typography variant="h1">
         {minutes}:{seconds}
       </Typography>
