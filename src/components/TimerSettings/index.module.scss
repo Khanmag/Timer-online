@@ -5,13 +5,11 @@
 }
 
 .dialogMainBox {
-  min-width: 300px;
-  min-height: 600px;
+  min-width: 500px;
   max-width: 90vw;
   max-height: 90vh;
   padding: 2rem;
   @media (max-width: 650px) {
     min-width: 90vw;
-    min-height: 90vh;
   }
 }

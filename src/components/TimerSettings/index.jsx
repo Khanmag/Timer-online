@@ -2,10 +2,12 @@ import {
   Box,
   Button,
   Dialog,
+  FormControlLabel,
   IconButton,
   MenuItem,
   Select,
   Switch,
+  Typography,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -30,21 +32,63 @@ const TimerSettings = () => {
     document.body.style.backgroundRepeat = "no-repeat";
     document.body.style.backgroundPosition = "center";
     document.body.style.backgroundSize = "cover";
-    
   }, []);
   return (
     <Box className={styles.timerSettings}>
       <IconButton color="secondary" onClick={() => setIsDialogOpen(true)}>
         <SettingsIcon />
       </IconButton>
+      {/* ------------------------------------------------------------ */}
       <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-        <Box width={350} height={600}>
-          DIALOG
-          <Box>
-            <Switch color="secondary" />
+        <Box className={styles.dialogMainBox}>
+          <Box p={1}>
+            <Typography textAlign={"center"} variant="h5">
+              Настройки
+            </Typography>
+          </Box>
+
+          <Box display={"flex"} justifyContent={"space-evenly"} mb={2}>
+            <FormControlLabel
+              control={<Switch color="secondary" />}
+              label={"Музыка"}
+            />
             <Select
               value={currentMusic}
-              // onChange={(e) => setCurrentMusic(e.target.value)}
+              color={"secondary"}
+              onChange={(e) => changeCurrentMusic(e.target.value)}
+            >
+              {musicOptions.map((musicItem) => (
+                <MenuItem key={musicItem.id} value={musicItem.id}>
+                  {musicItem.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </Box>
+          <Box display={"flex"} justifyContent={"space-evenly"} mb={2}>
+            <FormControlLabel
+              control={<Switch color="secondary" />}
+              label={"Сигнал"}
+            />
+            <Select
+              value={currentMusic}
+              color={"secondary"}
+              onChange={(e) => changeCurrentMusic(e.target.value)}
+            >
+              {musicOptions.map((musicItem) => (
+                <MenuItem key={musicItem.id} value={musicItem.id}>
+                  {musicItem.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </Box>
+          <Box display={"flex"} justifyContent={"space-evenly"} mb={2}>
+            <FormControlLabel
+              control={<Switch color="secondary" />}
+              label={"Обои"}
+            />
+            <Select
+              value={currentMusic}
+              color={"secondary"}
               onChange={(e) => changeCurrentMusic(e.target.value)}
             >
               {musicOptions.map((musicItem) => (
@@ -60,14 +104,14 @@ const TimerSettings = () => {
               variant="contained"
               color="secondary"
             >
-              OK
+              Сохранить
             </Button>
             <Button
               onClick={() => setIsDialogOpen(false)}
               variant="outlined"
               color="secondary"
             >
-              CLOSE
+              Отмена
             </Button>
           </Box>
         </Box>
