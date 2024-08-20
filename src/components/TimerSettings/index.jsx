@@ -12,27 +12,45 @@ import {
 import SettingsIcon from "@mui/icons-material/Settings";
 
 import styles from "./index.module.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentMusic } from "../../store/settingsSlice";
-import { musicOptions } from "../../store/settingsSlice/utils";
+import {
+  setCurrentBG,
+  setCurrentMusic,
+  setCurrentSignal,
+} from "../../store/settingsSlice";
+import {
+  backgroundOptions,
+  musicOptions,
+  signalOptions,
+} from "../../store/settingsSlice/utils";
 
 const TimerSettings = () => {
   const dispatch = useDispatch();
-  // const [currentMusic, setCurrentMusic] = useState(musicOptions[0].id);
-  const currentMusic = useSelector((store) => store.settings.currentMusic.id);
-  const changeCurrentMusic = (id) => dispatch(setCurrentMusic(id));
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  useEffect(() => {
-    console.log(
-      (document.body.style.backgroundImage =
-        "url(https://i.pinimg.com/originals/ca/7e/4d/ca7e4daa89582bf891247f6a4b5a113e.jpg)")
-    );
-    document.body.style.backgroundRepeat = "no-repeat";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundSize = "cover";
-  }, []);
+
+  const currentMusic = useSelector((store) => store.settings.currentMusic.id);
+  const currentSignal = useSelector((store) => store.settings.currentSignal.id);
+  const currentBG = useSelector((store) => store.settings.currentBG.id);
+  const changeCurrentMusic = (id) => dispatch(setCurrentMusic(id));
+  const changeCurrentSignal = (id) => dispatch(setCurrentSignal(id));
+  const changeCurrentBG = (id) => dispatch(setCurrentBG(id));
+
+  // const setBodyBG = (img) => {
+  //   console.log("CHANGE BODY BG", img, document.body.backgroundImage);
+
+  //   // document.body.background = `#ff0000`;
+  //   document.body.background = `url("${img}")`;
+  // };
+  // useEffect(() => {
+  //   const currentBGObj = backgroundOptions.find(
+  //     (item) => item.id === currentBG
+  //   );
+  //   // console.log("CHANGE BG", currentBGObj);
+  //   if (currentBGObj) setBodyBG(currentBGObj.src);
+  // }, [currentBG]);
+
   return (
     <Box className={styles.timerSettings}>
       <IconButton color="secondary" onClick={() => setIsDialogOpen(true)}>
@@ -46,7 +64,7 @@ const TimerSettings = () => {
               Настройки
             </Typography>
           </Box>
-
+          {/* Music */}
           <Box display={"flex"} justifyContent={"space-evenly"} mb={2}>
             <FormControlLabel
               control={<Switch color="secondary" />}
@@ -64,36 +82,38 @@ const TimerSettings = () => {
               ))}
             </Select>
           </Box>
+          {/* Signal */}
           <Box display={"flex"} justifyContent={"space-evenly"} mb={2}>
             <FormControlLabel
               control={<Switch color="secondary" />}
               label={"Сигнал"}
             />
             <Select
-              value={currentMusic}
+              value={currentSignal}
               color={"secondary"}
-              onChange={(e) => changeCurrentMusic(e.target.value)}
+              onChange={(e) => changeCurrentSignal(e.target.value)}
             >
-              {musicOptions.map((musicItem) => (
-                <MenuItem key={musicItem.id} value={musicItem.id}>
-                  {musicItem.title}
+              {signalOptions.map(({ id, title }) => (
+                <MenuItem key={id} value={id}>
+                  {title}
                 </MenuItem>
               ))}
             </Select>
           </Box>
+          {/* BGs */}
           <Box display={"flex"} justifyContent={"space-evenly"} mb={2}>
             <FormControlLabel
               control={<Switch color="secondary" />}
               label={"Обои"}
             />
             <Select
-              value={currentMusic}
+              value={currentBG}
               color={"secondary"}
-              onChange={(e) => changeCurrentMusic(e.target.value)}
+              onChange={(e) => changeCurrentBG(e.target.value)}
             >
-              {musicOptions.map((musicItem) => (
-                <MenuItem key={musicItem.id} value={musicItem.id}>
-                  {musicItem.title}
+              {backgroundOptions.map(({ id, title }) => (
+                <MenuItem key={id} value={id}>
+                  {title}
                 </MenuItem>
               ))}
             </Select>

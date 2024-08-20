@@ -2,27 +2,30 @@ import { Box } from "@mui/material";
 import TimerSettings from "./components/TimerSettings";
 import TimerBody from "./components/TimerBody";
 import { useEffect, useRef } from "react";
-import { setAudioRef } from "./store/settingsSlice";
+import { setAudioRef, setSignalRef } from "./store/settingsSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
   const audioRef = useRef();
+  const signalRef = useRef();
   const currentMusic = useSelector((store) => store.settings.currentMusic);
+  const currentSignal = useSelector((store) => store.settings.currentSignal);
+  const currentBG = useSelector((store) => store.settings.currentBG);
   useEffect(() => {
     dispatch(setAudioRef(audioRef));
+    dispatch(setSignalRef(signalRef));
   }, []);
   return (
-    <Box className={"main_container"}>
+    <Box
+      sx={{ backgroundImage: `url("${currentBG.src}")` }}
+      className={"main_container"}
+    >
       <TimerSettings />
       <TimerBody />
       <Box>
-        <audio
-          ref={audioRef}
-          id="audio329"
-          src={currentMusic.src}
-          type={"audio.mpeg"}
-        />
+        <audio ref={audioRef} src={currentMusic.src} type={"audio.mpeg"} />
+        <audio ref={signalRef} src={currentSignal.src} type={"audio.mpeg"} />
       </Box>
     </Box>
   );
