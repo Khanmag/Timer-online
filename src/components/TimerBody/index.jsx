@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "./index.module.scss";
 import { useSelector } from "react-redux";
 import TimerInputs from "./TimerInputs";
+import gifLoader from "../../assets/gif_loader.gif";
 
 //
 const getBeautifulTimeValue = (value) => [Math.floor(value / 60), value % 60];
@@ -41,6 +42,10 @@ const TimerBody = () => {
 
   return (
     <Box className={styles.mainTimerBox}>
+      <div
+        className={styles.gifLoader}
+        style={{ backgroundImage: `url(${gifLoader})` }}
+      />
       <Typography variant="h1">
         {minutes}:{seconds}
       </Typography>

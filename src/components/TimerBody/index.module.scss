@@ -24,3 +24,42 @@
   height: 50px;
   margin-top: 2rem;
 }
+
+.gifLoader {
+  position: fixed;
+  top: -200px;
+  // top: 200px;
+  right: calc(50vw - 100px);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-size: contain;
+  animation: showItem 1s linear forwards;
+  // animation: rotateItem 10s linear infinite;
+  // animation: hideItem 1s linear forwards;
+}
+
+@keyframes showItem {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(400px);
+  }
+}
+@keyframes rotateItem {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes hideItem {
+  from {
+    transform: translateY(400px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
