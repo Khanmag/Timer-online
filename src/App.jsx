@@ -4,6 +4,7 @@ import TimerBody from "./components/TimerBody";
 import { useEffect, useRef } from "react";
 import { setAudioRef, setSignalRef } from "./store/settingsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Auth from "./components/Auth";
 
 function App() {
   const dispatch = useDispatch();
@@ -12,15 +13,17 @@ function App() {
   const currentMusic = useSelector((store) => store.settings.currentMusic);
   const currentSignal = useSelector((store) => store.settings.currentSignal);
   const currentBG = useSelector((store) => store.settings.currentBG);
+  const isOnBG = useSelector((store) => store.settings.isOnBG);
   useEffect(() => {
     dispatch(setAudioRef(audioRef));
     dispatch(setSignalRef(signalRef));
   }, []);
   return (
     <Box
-      sx={{ backgroundImage: `url("${currentBG.src}")` }}
+      sx={isOnBG ? { backgroundImage: `url("${currentBG.src}")` } : {}}
       className={"main_container"}
     >
+      <Auth />
       <TimerSettings />
       <TimerBody />
       <Box>

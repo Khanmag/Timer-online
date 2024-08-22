@@ -1,7 +1,6 @@
 .mainTimerBox {
   background-color: white;
   border-radius: 30px;
-  border: 0.5px solid lightgray;
   padding: 2rem;
 }
 
@@ -28,6 +27,9 @@
 .gifLoader {
   position: fixed;
   top: -200px;
+  @media (max-width: 600px) {
+    top: -380px;
+  }
   // top: 200px;
   right: calc(50vw - 100px);
   width: 200px;

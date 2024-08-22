@@ -6,6 +6,7 @@ const initialState = {
   signalRef: null,
   currentMusic: musicOptions[0],
   currentSignal: signalOptions[0],
+  isOnBG: true,
   currentBG: backgroundOptions[0],
   theme: "light",
 };
@@ -32,6 +33,9 @@ const settingsSlice = createSlice({
       const newBG = backgroundOptions.find((item) => item.id === id);
       if (newBG) state.currentBG = newBG;
     },
+    setIsOnBG(state, {payload: v}) {
+      state.isOnBG = v
+    }
   },
 });
 
@@ -43,4 +47,5 @@ export const {
   setCurrentMusic,
   setCurrentSignal,
   setCurrentBG,
+  setIsOnBG
 } = settingsSlice.actions;

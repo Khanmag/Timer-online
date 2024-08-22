@@ -18,6 +18,7 @@ import {
   setCurrentBG,
   setCurrentMusic,
   setCurrentSignal,
+  setIsOnBG,
 } from "../../store/settingsSlice";
 import {
   backgroundOptions,
@@ -33,23 +34,24 @@ const TimerSettings = () => {
   const currentMusic = useSelector((store) => store.settings.currentMusic.id);
   const currentSignal = useSelector((store) => store.settings.currentSignal.id);
   const currentBG = useSelector((store) => store.settings.currentBG.id);
+  const isOnBG = useSelector((store) => store.settings.isOnBG);
   const changeCurrentMusic = (id) => dispatch(setCurrentMusic(id));
   const changeCurrentSignal = (id) => dispatch(setCurrentSignal(id));
   const changeCurrentBG = (id) => dispatch(setCurrentBG(id));
+  const changeIsOnBG = (v) => dispatch(setIsOnBG(v));
 
-  // const setBodyBG = (img) => {
-  //   console.log("CHANGE BODY BG", img, document.body.backgroundImage);
+  const [music, setMusic] = useState(currentMusic);
+  const [signal, setSignal] = useState(currentSignal);
+  const [bG, setBG] = useState(currentBG);
+  const [isOnBGLocal, setIsOnBGLocal] = useState(isOnBG);
 
-  //   // document.body.background = `#ff0000`;
-  //   document.body.background = `url("${img}")`;
-  // };
-  // useEffect(() => {
-  //   const currentBGObj = backgroundOptions.find(
-  //     (item) => item.id === currentBG
-  //   );
-  //   // console.log("CHANGE BG", currentBGObj);
-  //   if (currentBGObj) setBodyBG(currentBGObj.src);
-  // }, [currentBG]);
+  const onSaveSettings = () => {
+    changeCurrentMusic(music);
+    changeCurrentSignal(signal);
+    changeCurrentBG(bG);
+    changeIsOnBG(isOnBGLocal);
+    setIsDialogOpen(false);
+  };
 
   return (
     <Box className={styles.timerSettings}>
@@ -66,14 +68,15 @@ const TimerSettings = () => {
           </Box>
           {/* Music */}
           <Box display={"flex"} justifyContent={"space-evenly"} mb={2}>
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Switch color="secondary" />}
               label={"Музыка"}
-            />
+            /> */}
             <Select
-              value={currentMusic}
+              value={music}
               color={"secondary"}
-              onChange={(e) => changeCurrentMusic(e.target.value)}
+              // onChange={(e) => changeCurrentMusic(e.target.value)}
+              onChange={(e) => setMusic(e.target.value)}
             >
               {musicOptions.map((musicItem) => (
                 <MenuItem key={musicItem.id} value={musicItem.id}>
@@ -84,14 +87,15 @@ const TimerSettings = () => {
           </Box>
           {/* Signal */}
           <Box display={"flex"} justifyContent={"space-evenly"} mb={2}>
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Switch color="secondary" />}
               label={"Сигнал"}
-            />
+            /> */}
             <Select
-              value={currentSignal}
+              value={signal}
               color={"secondary"}
-              onChange={(e) => changeCurrentSignal(e.target.value)}
+              // onChange={(e) => changeCurrentSignal(e.target.value)}
+              onChange={(e) => setSignal(e.target.value)}
             >
               {signalOptions.map(({ id, title }) => (
                 <MenuItem key={id} value={id}>
@@ -103,13 +107,19 @@ const TimerSettings = () => {
           {/* BGs */}
           <Box display={"flex"} justifyContent={"space-evenly"} mb={2}>
             <FormControlLabel
-              control={<Switch color="secondary" />}
+              control={
+                <Switch
+                  checked={isOnBGLocal}
+                  onChange={() => setIsOnBGLocal((prev) => !prev)}
+                  color="secondary"
+                />
+              }
               label={"Обои"}
             />
             <Select
-              value={currentBG}
+              value={bG}
               color={"secondary"}
-              onChange={(e) => changeCurrentBG(e.target.value)}
+              onChange={(e) => setBG(e.target.value)}
             >
               {backgroundOptions.map(({ id, title }) => (
                 <MenuItem key={id} value={id}>
@@ -120,7 +130,7 @@ const TimerSettings = () => {
           </Box>
           <Box display={"flex"} justifyContent={"space-evenly"}>
             <Button
-              onClick={() => setIsDialogOpen(false)}
+              onClick={onSaveSettings}
               variant="contained"
               color="secondary"
             >
