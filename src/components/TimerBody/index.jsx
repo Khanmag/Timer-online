@@ -1,10 +1,11 @@
-import { Box, Button, Dialog, Typography } from "@mui/material";
+import { Box, Dialog, Typography } from "@mui/material";
 import { useState } from "react";
 import styles from "./index.module.scss";
 import { useSelector } from "react-redux";
 import TimerInputs from "./TimerInputs";
 import gifLoader from "../../assets/gif_loader.gif";
 import { Transition } from "react-transition-group";
+import Button_ from "../Button";
 
 //
 const getBeautifulTimeValue = (value) => [Math.floor(value / 60), value % 60];
@@ -76,23 +77,23 @@ const TimerBody = () => {
           timerValue={timerValue}
         />
         <Box className={styles.timerButtonsBox}>
-          <Button
+          <Button_
             variant="contained"
-            color="secondary"
+            // color="secondary"
             disabled={currentTimerId}
             // onClick={onTimerStart}
             onClick={onClickStart}
           >
             START
-          </Button>
-          <Button
+          </Button_>
+          <Button_
             variant="outlined"
-            color="secondary"
+            // color="secondary"
             onClick={onTimerStop}
             disabled={!currentTimerId}
           >
             STOP
-          </Button>
+          </Button_>
         </Box>
       </Box>
       {/* --------------- */}
@@ -105,28 +106,17 @@ const TimerBody = () => {
             <Typography>Хотите ли вы включить музыку?</Typography>
           </Box>
           <Box display={"flex"} justifyContent={"space-evenly"} p={1}>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => onTimerStart(true)}
-            >
+            <Button_ variant="contained" onClick={() => onTimerStart(true)}>
               Да
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => onTimerStart()}
-            >
+            </Button_>
+            <Button_ variant="outlined" onClick={() => onTimerStart()}>
               Нет
-            </Button>
+            </Button_>
           </Box>
           <Box display={"flex"} justifyContent={"center"} p={1}>
-            <Button
-              color="secondary"
-              onClick={() => setIsMusicDialogOpen(false)}
-            >
+            <Button_ onClick={() => setIsMusicDialogOpen(false)}>
               Отмена
-            </Button>
+            </Button_>
           </Box>
         </Box>
       </Dialog>

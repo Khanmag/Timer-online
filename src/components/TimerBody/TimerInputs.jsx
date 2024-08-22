@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Slider, TextField } from "@mui/material";
+import { Box, Slider, TextField } from "@mui/material";
 import styles from "./index.module.scss";
+import Button_ from "../Button";
 
 const cutZeroBefore = (str) =>
   str.length >= 2 && str[0] === "0" ? cutZeroBefore(str.slice(1)) : str;
@@ -54,14 +55,13 @@ const TimerInputs = ({ disabled, timerValue, setTimerValue }) => {
           label={"секунды"}
           color="secondary"
         />
-        <Button
+        <Button_
           onClick={onSetInputsValues}
           disabled={disabled || isInputValuesEqualCurrentTime}
-          color="secondary"
           variant="contained"
         >
           OK
-        </Button>
+        </Button_>
       </Box>
     </Box>
   );

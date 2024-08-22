@@ -71,5 +71,18 @@ const backgroundOptions = [
     src: bg4,
   },
 ];
-
-export { musicOptions, signalOptions, backgroundOptions };
+const themes = [
+  {
+    id: 1,
+    color: "blue",
+  },
+  {
+    id: 2,
+    color: "purple",
+  },
+  {
+    id: 3,
+    color: "green",
+  },
+];
+export { musicOptions, signalOptions, backgroundOptions, themes };
