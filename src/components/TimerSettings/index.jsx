@@ -11,7 +11,7 @@ import {
 import SettingsIcon from "@mui/icons-material/Settings";
 
 import styles from "./index.module.scss";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentBG,
@@ -27,11 +27,17 @@ import {
   themes,
 } from "../../store/settingsSlice/utils";
 import Button_ from "../Button";
+// import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+// import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
+// import IconButton_ from "../Button/IconButton";
 
 const TimerSettings = () => {
   const dispatch = useDispatch();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const currentAudioRef = useRef();
+  // const [isMusicPlayNow, setIsMusicPlayNow] = useState(false);
 
   const currentMusic = useSelector((store) => store.settings.currentMusic.id);
   const currentSignal = useSelector((store) => store.settings.currentSignal.id);
@@ -58,6 +64,18 @@ const TimerSettings = () => {
     changeTheme(currentTheme);
     setIsDialogOpen(false);
   };
+
+  // const demoMusicPlay = () => {
+  //   currentAudioRef.current.play();
+  //   setIsMusicPlayNow(true);
+  // };
+  // const demoMusicPause = () => {
+  //   currentAudioRef.current.pause();
+  //   setIsMusicPlayNow(false);
+  // };
+  useEffect(() => {
+    if (currentAudioRef.current) currentAudioRef.current.play();
+  }, [music]);
 
   return (
     <Box className={styles.timerSettings}>
@@ -87,11 +105,32 @@ const TimerSettings = () => {
             </Select>
           </Box>
           {/* Music */}
-          <Box display={"flex"} justifyContent={"space-evenly"} mb={2}>
-            {/* <FormControlLabel
-              control={<Switch color="secondary" />}
-              label={"Музыка"}
-            /> */}
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            mb={2}
+          >
+            {/*  */}
+            <div>
+              <audio
+                ref={currentAudioRef}
+                src={musicOptions.find((item) => item.id === music).src}
+                type="audio.mpeg"
+              />
+            </div>
+            {/*  */}
+            {/* <Box>
+              {isMusicPlayNow ? (
+                <IconButton_>
+                  <PauseCircleOutlineIcon onClick={demoMusicPause} />
+                </IconButton_>
+              ) : (
+                <IconButton_>
+                  <PlayCircleIcon onClick={demoMusicPlay} />
+                </IconButton_>
+              )}
+            </Box> */}
             <Select
               value={music}
               color={"secondary"}

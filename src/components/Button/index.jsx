@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useSelector } from "react-redux";
 
-const getColorByTheme = (t) => {
+export const getColorByTheme = (t) => {
   switch (t) {
     case "blue":
       return "primary";
